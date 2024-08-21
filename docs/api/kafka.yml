@@ -1,0 +1,119 @@
+asyncapi: 2.0.0
+info:
+  title: Sensor Topics API
+  description: Спецификация для топиков Kafka, используемых для получения данных от различных типов сенсоров.
+  version: 1.0.0
+
+servers:
+  production:
+    url: kafka-broker:9092
+    protocol: kafka
+
+channels:
+  light-sensor-topic:
+    description: Топик для получения данных от сенсоров управления светом.
+    subscribe:
+      operationId: receiveLightSensorData
+      summary: Получение данных от сенсоров управления светом
+      message:
+        contentType: application/json
+        payload:
+          type: object
+          properties:
+            device_id:
+              type: string
+              format: uuid
+              description: Уникальный идентификатор устройства
+            timestamp:
+              type: string
+              format: date-time
+              description: Дата и время получения данных
+            data:
+              type: object
+              additionalProperties: true
+              description: Данные, полученные от сенсора управления светом
+          required:
+            - device_id
+            - timestamp
+            - data
+
+  gate-sensor-topic:
+    description: Топик для получения данных от сенсоров управления воротами.
+    subscribe:
+      operationId: receiveGateSensorData
+      summary: Получение данных от сенсоров управления воротами
+      message:
+        contentType: application/json
+        payload:
+          type: object
+          properties:
+            device_id:
+              type: string
+              format: uuid
+              description: Уникальный идентификатор устройства
+            timestamp:
+              type: string
+              format: date-time
+              description: Дата и время получения данных
+            data:
+              type: object
+              additionalProperties: true
+              description: Данные, полученные от сенсора управления воротами
+          required:
+            - device_id
+            - timestamp
+            - data
+
+  camera-sensor-topic:
+    description: Топик для получения данных от камер наблюдения.
+    subscribe:
+      operationId: receiveCameraSensorData
+      summary: Получение данных от камер наблюдения
+      message:
+        contentType: application/json
+        payload:
+          type: object
+          properties:
+            device_id:
+              type: string
+              format: uuid
+              description: Уникальный идентификатор устройства
+            timestamp:
+              type: string
+              format: date-time
+              description: Дата и время получения данных
+            data:
+              type: object
+              additionalProperties: true
+              description: Данные, полученные от камер наблюдения
+          required:
+            - device_id
+            - timestamp
+            - data
+
+  heating-sensor-topic:
+    description: Топик для получения данных от сенсоров управления отоплением.
+    subscribe:
+      operationId: receiveHeatingSensorData
+      summary: Получение данных от сенсоров управления отоплением
+      message:
+        contentType: application/json
+        payload:
+          type: object
+          properties:
+            device_id:
+              type: string
+              format: uuid
+              description: Уникальный идентификатор устройства
+            timestamp:
+              type: string
+              format: date-time
+              description: Дата и время получения данных
+            data:
+              type: object
+              additionalProperties: true
+              description: Данные, полученные от сенсора управления отоплением
+          required:
+            - device_id
+            - timestamp
+            - data
