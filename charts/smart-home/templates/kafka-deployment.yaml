@@ -12,10 +12,6 @@ spec:
       labels:
         app: kafka
     spec:
-      initContainers:
-        - name: wait-for-zookeeper
-          image: busybox
-          command: [ 'sh', '-c', 'until nc -z zookeeper {{ .Values.zookeeper.port }}; do echo waiting for zookeeper; sleep 2; done;' ]
       containers:
         - name: kafka
           image: {{ .Values.kafka.image }}
@@ -34,6 +30,8 @@ spec:
               value: {{ .Values.kafka.interBrokerListenerName }}
             - name: KAFKA_ZOOKEEPER_CONNECT
               value: {{ .Values.kafka.zookeeperConnect }}
+            - name: KAFKA_PORT
+              value: {{ .Values.kafka.port | quote }}
 ---
 apiVersion: v1
 kind: Service

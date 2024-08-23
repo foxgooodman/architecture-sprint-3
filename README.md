@@ -8,15 +8,15 @@
 minikube start
 ```
 
+## Установка helm 
 
-## Добавление токена авторизации GitHub
+https://helm.sh/
 
-[Получение токена](https://github.com/settings/tokens/new)
+## Запуск 
 
 ```bash
-kubectl create secret docker-registry ghcr --docker-server=https://ghcr.io --docker-username=<github_username> --docker-password=<github_token> -n default
+helm install smart-home ./smart-home
 ```
-
 
 ## Установка API GW kusk
 
@@ -24,33 +24,6 @@ kubectl create secret docker-registry ghcr --docker-server=https://ghcr.io --doc
 
 ```bash
 kusk cluster install
-```
-
-
-## Настройка terraform
-
-[Установите Terraform](https://yandex.cloud/ru/docs/tutorials/infrastructure-management/terraform-quickstart#install-terraform)
-
-
-Создайте файл ~/.terraformrc
-
-```hcl
-provider_installation {
-  network_mirror {
-    url = "https://terraform-mirror.yandexcloud.net/"
-    include = ["registry.terraform.io/*/*"]
-  }
-  direct {
-    exclude = ["registry.terraform.io/*/*"]
-  }
-}
-```
-
-## Применяем terraform конфигурацию 
-
-```bash
-cd terraform
-terraform apply
 ```
 
 ## Настройка API GW
@@ -66,9 +39,47 @@ kubectl port-forward svc/kusk-gateway-envoy-fleet -n kusk-system 8080:80
 curl localhost:8080/hello
 ```
 
-
 ## Delete minikube
 
 ```bash
 minikube delete
 ```
+
+
+
+
+
+
+
+
+
+
+
+Локальная проверка без gateway
+
+пробрасываем порт ui приложения kafka-ui
+
+```bash
+kubectl get pods -l app=kafka-ui
+```
+
+```bash
+kubectl port-forward <pod-name> 8080:8080
+```
+http://localhost:8080/ui/clusters/create-new-cluster
+
+Проверить отправку и прием сообщений можно утилитой по адресу localhost:8085
+
+![img.png](img.png)
+
+В теле сообщения в топик отправить
+
+```json
+{
+  "timestamp": "2024-08-22T20:00:00Z",
+  "deviceId": "123e4567-e89b-12d3-a456-426614174000",
+  "data": {
+    "temperature": 22.5,
+    "humidity": 60
+  }
+}

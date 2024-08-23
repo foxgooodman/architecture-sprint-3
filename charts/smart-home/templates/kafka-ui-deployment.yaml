@@ -26,7 +26,11 @@ kind: Service
 metadata:
   name: kafka-ui
 spec:
-  ports:
-    - port: {{ .Values.kafkaUi.port }}
+  type: NodePort
   selector:
     app: kafka-ui
+  ports:
+    - protocol: TCP
+      port: 8080         # Порт внутри кластера
+      targetPort: 8080   # Порт контейнера
+      nodePort: 30085
