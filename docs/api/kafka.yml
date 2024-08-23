@@ -11,10 +11,10 @@ servers:
 
 channels:
   light-sensor-topic:
-    description: Топик для получения данных от сенсоров управления светом.
+    description: Топик для получения данных от сенсоров
     subscribe:
-      operationId: receiveLightSensorData
-      summary: Получение данных от сенсоров управления светом
+      operationId: telemetry-data-topic
+      summary: Получение данных от сенсоров управления
       message:
         contentType: application/json
         payload:
@@ -31,88 +31,7 @@ channels:
             data:
               type: object
               additionalProperties: true
-              description: Данные, полученные от сенсора управления светом
-          required:
-            - device_id
-            - timestamp
-            - data
-
-  gate-sensor-topic:
-    description: Топик для получения данных от сенсоров управления воротами.
-    subscribe:
-      operationId: receiveGateSensorData
-      summary: Получение данных от сенсоров управления воротами
-      message:
-        contentType: application/json
-        payload:
-          type: object
-          properties:
-            device_id:
-              type: string
-              format: uuid
-              description: Уникальный идентификатор устройства
-            timestamp:
-              type: string
-              format: date-time
-              description: Дата и время получения данных
-            data:
-              type: object
-              additionalProperties: true
-              description: Данные, полученные от сенсора управления воротами
-          required:
-            - device_id
-            - timestamp
-            - data
-
-  camera-sensor-topic:
-    description: Топик для получения данных от камер наблюдения.
-    subscribe:
-      operationId: receiveCameraSensorData
-      summary: Получение данных от камер наблюдения
-      message:
-        contentType: application/json
-        payload:
-          type: object
-          properties:
-            device_id:
-              type: string
-              format: uuid
-              description: Уникальный идентификатор устройства
-            timestamp:
-              type: string
-              format: date-time
-              description: Дата и время получения данных
-            data:
-              type: object
-              additionalProperties: true
-              description: Данные, полученные от камер наблюдения
-          required:
-            - device_id
-            - timestamp
-            - data
-
-  heating-sensor-topic:
-    description: Топик для получения данных от сенсоров управления отоплением.
-    subscribe:
-      operationId: receiveHeatingSensorData
-      summary: Получение данных от сенсоров управления отоплением
-      message:
-        contentType: application/json
-        payload:
-          type: object
-          properties:
-            device_id:
-              type: string
-              format: uuid
-              description: Уникальный идентификатор устройства
-            timestamp:
-              type: string
-              format: date-time
-              description: Дата и время получения данных
-            data:
-              type: object
-              additionalProperties: true
-              description: Данные, полученные от сенсора управления отоплением
+              description: Данные, полученные от сенсора управления
           required:
             - device_id
             - timestamp

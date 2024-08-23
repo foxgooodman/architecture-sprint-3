@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-ui
+spec:
+  selector:
+    matchLabels:
+      app: kafka-ui
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kafka-ui
+    spec:
+      containers:
+        - name: kafka-ui
+          image: {{ .Values.kafkaUi.image }}
+          ports:
+            - containerPort: {{ .Values.kafkaUi.port }}
+          env:
+            - name: DYNAMIC_CONFIG_ENABLED
+              value: {{ .Values.kafkaUi.dynamicConfigEnabled | quote }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-ui
+spec:
+  ports:
+    - port: {{ .Values.kafkaUi.port }}
+  selector:
+    app: kafka-ui
